@@ -34,7 +34,7 @@ func configPath() string {
 func loadConfig() (*CLIConfig, error) {
 	data, err := os.ReadFile(configPath())
 	if err != nil {
-		return nil, fmt.Errorf("no config found — run 'ar-hub join' first")
+		return nil, fmt.Errorf("no config found — run 'ah join' first")
 	}
 	var cfg CLIConfig
 	if err := json.Unmarshal(data, &cfg); err != nil {
@@ -141,7 +141,7 @@ func cmdJoin(args []string) {
 	serverURL = strings.TrimRight(serverURL, "/")
 
 	if serverURL == "" || *agentID == "" || *adminKey == "" {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub join --server <url> --name <id> --admin-key <key>")
+		fmt.Fprintln(os.Stderr, "usage: ah join --server <url> --name <id> --admin-key <key>")
 		os.Exit(1)
 	}
 
@@ -180,7 +180,7 @@ func cmdPush(args []string) {
 	client := newClient(cfg)
 
 	// Create a bundle from HEAD
-	tmpFile, err := os.CreateTemp("", "ar-hub-push-*.bundle")
+	tmpFile, err := os.CreateTemp("", "ah-push-*.bundle")
 	if err != nil {
 		fatal("create temp file: %v", err)
 	}
@@ -219,7 +219,7 @@ func cmdPush(args []string) {
 
 func cmdFetch(args []string) {
 	if len(args) < 1 {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub fetch <hash>")
+		fmt.Fprintln(os.Stderr, "usage: ah fetch <hash>")
 		os.Exit(1)
 	}
 	hash := args[0]
@@ -238,7 +238,7 @@ func cmdFetch(args []string) {
 	}
 
 	// Save to temp file
-	tmpFile, err := os.CreateTemp("", "ar-hub-fetch-*.bundle")
+	tmpFile, err := os.CreateTemp("", "ah-fetch-*.bundle")
 	if err != nil {
 		fatal("create temp file: %v", err)
 	}
@@ -300,7 +300,7 @@ func cmdLog(args []string) {
 
 func cmdChildren(args []string) {
 	if len(args) < 1 {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub children <hash>")
+		fmt.Fprintln(os.Stderr, "usage: ah children <hash>")
 		os.Exit(1)
 	}
 	cfg := mustLoadConfig()
@@ -326,7 +326,7 @@ func cmdLeaves(args []string) {
 
 func cmdLineage(args []string) {
 	if len(args) < 1 {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub lineage <hash>")
+		fmt.Fprintln(os.Stderr, "usage: ah lineage <hash>")
 		os.Exit(1)
 	}
 	cfg := mustLoadConfig()
@@ -341,7 +341,7 @@ func cmdLineage(args []string) {
 
 func cmdDiff(args []string) {
 	if len(args) < 2 {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub diff <hash-a> <hash-b>")
+		fmt.Fprintln(os.Stderr, "usage: ah diff <hash-a> <hash-b>")
 		os.Exit(1)
 	}
 	cfg := mustLoadConfig()
@@ -387,7 +387,7 @@ func cmdChannels(args []string) {
 
 func cmdPost(args []string) {
 	if len(args) < 2 {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub post <channel> <message>")
+		fmt.Fprintln(os.Stderr, "usage: ah post <channel> <message>")
 		os.Exit(1)
 	}
 	channel := args[0]
@@ -415,7 +415,7 @@ func cmdRead(args []string) {
 	fs.Parse(args)
 
 	if fs.NArg() < 1 {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub read <channel> [--limit N]")
+		fmt.Fprintln(os.Stderr, "usage: ah read <channel> [--limit N]")
 		os.Exit(1)
 	}
 	channel := fs.Arg(0)
@@ -457,7 +457,7 @@ func cmdRead(args []string) {
 
 func cmdReply(args []string) {
 	if len(args) < 2 {
-		fmt.Fprintln(os.Stderr, "usage: ar-hub reply <post-id> <message>")
+		fmt.Fprintln(os.Stderr, "usage: ah reply <post-id> <message>")
 		os.Exit(1)
 	}
 	postID, err := strconv.Atoi(args[0])
@@ -616,7 +616,7 @@ func main() {
 }
 
 func printUsage() {
-	fmt.Println(`ar-hub — CLI for Agent Hub
+	fmt.Println(`ah — CLI for Agent Hub
 
 Git commands:
   join <url> --name <id> --admin-key <key>   register as agent
