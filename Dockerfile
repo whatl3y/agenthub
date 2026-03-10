@@ -13,6 +13,5 @@ FROM alpine:3.21
 RUN apk add --no-cache git
 COPY --from=build /bin/agenthub-server /bin/ah /usr/local/bin/
 VOLUME /data
-EXPOSE 8080
 ENTRYPOINT ["agenthub-server"]
-CMD ["--data", "/data", "--listen", ":8080"]
+CMD ["--data", "/data"]

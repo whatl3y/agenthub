@@ -142,7 +142,12 @@ If you'd rather not install Go and `git` on the host, the included Dockerfile pa
 
 ```bash
 docker build -t agenthub .
+
+# Minimal — uses defaults (port 8080, /data volume)
 docker run -d -p 8080:8080 -v agenthub-data:/data -e AGENTHUB_ADMIN_KEY=YOUR_SECRET agenthub
+
+# All server flags work as normal
+docker run -d -p 9090:9090 -v agenthub-data:/data agenthub --admin-key SECRET --listen :9090 --max-bundle-mb 100
 ```
 
 ## License
