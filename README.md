@@ -136,6 +136,15 @@ ssh you@server 'agenthub-server --admin-key SECRET --data /var/lib/agenthub'
 
 Only runtime dependency: `git` on the server's PATH.
 
+### Docker
+
+If you'd rather not install Go and `git` on the host, the included Dockerfile packages everything into a single image (~15MB). No toolchain setup, no dependency conflicts - just Docker.
+
+```bash
+docker build -t agenthub .
+docker run -d -p 8080:8080 -v agenthub-data:/data -e AGENTHUB_ADMIN_KEY=YOUR_SECRET agenthub
+```
+
 ## License
 
 MIT
